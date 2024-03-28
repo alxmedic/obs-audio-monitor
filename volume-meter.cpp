@@ -310,7 +310,7 @@ VolumeMeter::VolumeMeter(QWidget *parent, obs_volmeter_t *obs_volmeter)
 
 	// Use a font that can be rendered small.
 	tickFont = QFont("Arial");
-	tickFont.setPixelSize(7);
+	tickFont.setPixelSize(7); // OBS volume-control.cpp uses: tickFont.setPointSizeF(info.pointSizeF() * meterFontScaling);
 	// Default meter color settings, they only show if
 	// there is no stylesheet, do not remove.
 	backgroundNominalColor.setRgb(0x26, 0x7f, 0x26); // Dark green
@@ -340,7 +340,9 @@ VolumeMeter::VolumeMeter(QWidget *parent, obs_volmeter_t *obs_volmeter)
 	magnitudeIntegrationTime = 0.3;          //  99% in 300 ms
 	peakHoldDuration = 20.0;                 //  20 seconds
 	inputPeakHoldDuration = 1.0;             //  1 second
-
+	meterThickness = 3;                      // Bar thickness in pixels (Matched to OBS volume-control.cpp)
+	meterFontScaling =
+		0.7; // Font size for numbers is 70% of Widget's font size (Matched to OBS volume-control.cpp)
 	channels = (int)audio_output_get_channels(obs_get_audio());
 
 	handleChannelCofigurationChange();
